@@ -1,17 +1,20 @@
 package com.ucb.ucbtest.di
 
 import android.content.Context
+import com.ucb.data.BookRepository
 import com.ucb.data.FinanzasRepository
 import com.ucb.data.GithubRepository
 import com.ucb.data.LoginRepository
 import com.ucb.data.MovieRepository
 import com.ucb.data.PushNotificationRepository
+import com.ucb.data.books.IBookRemoteDataSource
 import com.ucb.data.datastore.ILoginDataStore
 import com.ucb.data.git.IGitRemoteDataSource
 import com.ucb.data.git.ILocalDataSource
 import com.ucb.data.movie.IMovieRemoteDataSource
 import com.ucb.data.push.IPushDataSource
 import com.ucb.data.simulacro.IFinanzasLocalDataSource
+import com.ucb.framework.books.BookRemoteDataSource
 import com.ucb.framework.github.GithubLocalDataSource
 import com.ucb.framework.github.GithubRemoteDataSource
 import com.ucb.framework.movie.MovieRemoteDataSource
@@ -32,6 +35,7 @@ import com.ucb.framework.push.FirebaseNotificationDataSource
 import com.ucb.framework.simulacro.FinanzasLocalDataSource
 import com.ucb.usecases.GetEmailKey
 import com.ucb.usecases.ObtainToken
+import com.ucb.usecases.books.FindBooks
 import com.ucb.usecases.simulacro.DeleteFinanza
 import com.ucb.usecases.simulacro.DoEgreso
 import com.ucb.usecases.simulacro.DoIngreso
@@ -178,4 +182,25 @@ fun provideFinanzasLocalDataSource(@ApplicationContext context: Context): IFinan
     fun provideGetTotal(repository: FinanzasRepository): GetTotal {
         return GetTotal(repository)
     }
+
+    //Books
+
+    @Provides
+    @Singleton
+    fun provideFindBooks(bookRepository: BookRepository, @ApplicationContext context: Context): FindBooks {
+        return FindBooks(bookRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBookRepository(dataSource: IBookRemoteDataSource) : BookRepository {
+        return BookRepository(dataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBookRemoteDataSource(retrofit: RetrofitBuilder ): IBookRemoteDataSource {
+        return BookRemoteDataSource(retrofit)
+    }
+
 }

@@ -8,6 +8,7 @@ import com.ucb.ucbtest.Simulacro.FinanzasUI
 import com.ucb.ucbtest.Simulacro.ListaRegistroUI
 import com.ucb.ucbtest.Simulacro.registrarEgresoUI
 import com.ucb.ucbtest.Simulacro.registrarIngresoUI
+import com.ucb.ucbtest.books.BooksUI
 import com.ucb.ucbtest.counter.CounterUI
 import com.ucb.ucbtest.counter.CounterUIV2
 import com.ucb.ucbtest.gitalias.GitaliasUI
@@ -25,11 +26,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AppNavigation()
+//            AppNavigation()
 //            FinanzasUI()
 //            registrarIngresoUI()
 //            ListaRegistroUI()
 //            registrarEgresoUI()
+            BooksUI()
         }
     }
 }
