@@ -27,13 +27,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-//            AppNavigation()
+            AppNavigation()
 //            FinanzasUI()
 //            registrarIngresoUI()
 //            ListaRegistroUI()
 //            registrarEgresoUI()
 //            BooksUI()
-            FavoriteBooksUI()
+//            FavoriteBooksUI()
         }
     }
 }

@@ -32,10 +32,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavHostController
 import com.ucb.ucbtest.R
+import com.ucb.ucbtest.Simulacro.FinanzasViewModel
+import com.ucb.ucbtest.navigation.Screen
 
 @Composable
-fun BooksUI(viewModel: BookViewModel = hiltViewModel()) {
+fun BooksUI(viewModel: BookViewModel = hiltViewModel(), navController: NavHostController, onSuccess : () -> Unit) {
     var bookName by remember { mutableStateOf("") }
 
     val bookState by viewModel.flow.collectAsState()
@@ -48,6 +51,15 @@ fun BooksUI(viewModel: BookViewModel = hiltViewModel()) {
     ) {
         Column( horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            OutlinedButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    Toast.makeText(context,"Cargando Libros Favoritos",Toast.LENGTH_SHORT).show()
+                    navController.navigate(Screen.FavoriteBooksScreen.route)
+                }
+            ) {
+                Text("Libros Favoritos")
+            }
             Text(
                 "Bienvenido al Buscador de Libro"
             )

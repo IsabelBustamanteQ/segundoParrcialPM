@@ -13,4 +13,7 @@ sealed class Screen(val route: String) {
     object FinanzasIngreso:Screen("finanzasIngreso")
     object FinanzasEgreso:Screen("finanzasEgreso")
 
+//    Books
+    object BooksScreen:Screen("books")
+    object FavoriteBooksScreen:Screen("favoriteBooks")
 }

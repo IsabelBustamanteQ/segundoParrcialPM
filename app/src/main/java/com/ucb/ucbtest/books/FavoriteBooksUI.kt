@@ -33,7 +33,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.ucb.domain.Movie
 import com.ucb.domain.books.Book
@@ -41,8 +43,8 @@ import com.ucb.ucbtest.Simulacro.FinanzasViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FavoriteBooksUI() {
-    val bookViewModel: BookViewModel = viewModel()
+fun FavoriteBooksUI(bookViewModel: BookViewModel = hiltViewModel(), navController: NavHostController, onBackPressed: () -> Unit) {
+//    val bookViewModel: BookViewModel = viewModel()
 
     LaunchedEffect(Unit) {
         bookViewModel.getBooks()

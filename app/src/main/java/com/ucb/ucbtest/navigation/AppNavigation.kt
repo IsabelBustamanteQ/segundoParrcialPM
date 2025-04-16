@@ -13,6 +13,8 @@ import com.ucb.ucbtest.Simulacro.FinanzasUI
 import com.ucb.ucbtest.Simulacro.ListaRegistroUI
 import com.ucb.ucbtest.Simulacro.registrarEgresoUI
 import com.ucb.ucbtest.Simulacro.registrarIngresoUI
+import com.ucb.ucbtest.books.BooksUI
+import com.ucb.ucbtest.books.FavoriteBooksUI
 import com.ucb.ucbtest.counter.CounterUI
 import com.ucb.ucbtest.gitalias.GitaliasUI
 import com.ucb.ucbtest.login.LoginUI
@@ -31,7 +33,8 @@ fun AppNavigation() {
     NavHost(
         navController = navController,
 //        startDestination = Screen.LoginScreen.route,
-        startDestination = Screen.FinanzasScreen.route,
+//        startDestination = Screen.FinanzasScreen.route,
+        startDestination = Screen.BooksScreen.route,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
@@ -103,7 +106,13 @@ fun AppNavigation() {
         composable(Screen.FinanzasRegistros.route) {
             ListaRegistroUI(navController = navController, onBackPressed = { navController.popBackStack() })
         }
-
+//        Books
+        composable(Screen.BooksScreen.route){
+            BooksUI(navController = navController, onSuccess = {})
+        }
+        composable(Screen.FavoriteBooksScreen.route){
+            FavoriteBooksUI(navController=navController,  onBackPressed = { navController.popBackStack() })
+        }
     }
 
 
