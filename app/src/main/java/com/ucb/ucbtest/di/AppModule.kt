@@ -7,6 +7,7 @@ import com.ucb.data.GithubRepository
 import com.ucb.data.LoginRepository
 import com.ucb.data.MovieRepository
 import com.ucb.data.PushNotificationRepository
+import com.ucb.data.books.IBookLocalDataSource
 import com.ucb.data.books.IBookRemoteDataSource
 import com.ucb.data.datastore.ILoginDataStore
 import com.ucb.data.git.IGitRemoteDataSource
@@ -14,6 +15,7 @@ import com.ucb.data.git.ILocalDataSource
 import com.ucb.data.movie.IMovieRemoteDataSource
 import com.ucb.data.push.IPushDataSource
 import com.ucb.data.simulacro.IFinanzasLocalDataSource
+import com.ucb.framework.books.BookLocalDataSource
 import com.ucb.framework.books.BookRemoteDataSource
 import com.ucb.framework.github.GithubLocalDataSource
 import com.ucb.framework.github.GithubRemoteDataSource
@@ -36,6 +38,7 @@ import com.ucb.framework.simulacro.FinanzasLocalDataSource
 import com.ucb.usecases.GetEmailKey
 import com.ucb.usecases.ObtainToken
 import com.ucb.usecases.books.FindBooks
+import com.ucb.usecases.books.SaveBook
 import com.ucb.usecases.simulacro.DeleteFinanza
 import com.ucb.usecases.simulacro.DoEgreso
 import com.ucb.usecases.simulacro.DoIngreso
@@ -190,17 +193,28 @@ fun provideFinanzasLocalDataSource(@ApplicationContext context: Context): IFinan
     fun provideFindBooks(bookRepository: BookRepository, @ApplicationContext context: Context): FindBooks {
         return FindBooks(bookRepository)
     }
-
     @Provides
     @Singleton
-    fun provideBookRepository(dataSource: IBookRemoteDataSource) : BookRepository {
-        return BookRepository(dataSource)
+    fun provideSaveBook(bookRepository: BookRepository, @ApplicationContext context: Context): SaveBook {
+        return SaveBook(bookRepository)
     }
 
     @Provides
     @Singleton
-    fun provideBookRemoteDataSource(retrofit: RetrofitBuilder ): IBookRemoteDataSource {
-        return BookRemoteDataSource(retrofit)
+    fun bookRemoteDataSource(retrofiService: RetrofitBuilder): IBookRemoteDataSource {
+        return BookRemoteDataSource(retrofiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBookLocalDataSource(@ApplicationContext context: Context): IBookLocalDataSource {
+        return BookLocalDataSource(context)
+    }
+
+    @Provides
+    @Singleton
+    fun bookRepository(remoteDataSource: IBookRemoteDataSource, localDataSource: IBookLocalDataSource): BookRepository {
+        return BookRepository(remoteDataSource, localDataSource)
     }
 
 }

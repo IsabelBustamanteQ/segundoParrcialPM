@@ -8,6 +8,7 @@ import com.ucb.framework.dto.AvatarResponseDto
 import com.ucb.framework.dto.BookDto
 import com.ucb.framework.dto.MovieDto
 import com.ucb.framework.persistence.GitAccount
+import com.ucb.framework.persistenceBook.BookDB
 import com.ucb.framework.simulacroPersistence.FinanzasRegistro
 
 fun AvatarResponseDto.toModel(): Gitalias {
@@ -53,3 +54,11 @@ fun BookDto.toModel(): Book {
         publish_year = first_publish_year ?: "Año desconocido"
     )
 }
+fun Book.toEntity(): BookDB {
+    return BookDB(
+        author = author.ifEmpty { listOf("Autor desconocido") },
+        title = title.ifBlank { "Sin título" },
+        publish_year = publish_year.ifBlank { "Año desconocido" }
+    )
+}
+

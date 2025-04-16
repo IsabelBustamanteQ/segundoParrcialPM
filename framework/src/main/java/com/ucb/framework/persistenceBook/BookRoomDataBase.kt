@@ -1,0 +1,27 @@
+package com.ucb.framework.persistenceBook
+
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+
+@Database(entities = [BookDB::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
+abstract class BookRoomDatabase : RoomDatabase() {
+    abstract fun bookDao(): IBookDAO
+
+    companion object {
+        @Volatile
+        var Instance: BookRoomDatabase? = null
+        fun getDatabase(context: Context): BookRoomDatabase {
+            // if the Instance is not null, return it, otherwise create a new database instance.
+            return Instance ?: synchronized(this) {
+                Room.databaseBuilder(context.applicationContext, BookRoomDatabase::class.java, "book_database")
+                    .build()
+                    .also { Instance = it }
+            }
+        }
+    }
+}
+

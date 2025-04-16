@@ -1,5 +1,6 @@
 package com.ucb.ucbtest.books
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Button
+import androidx.compose.ui.platform.LocalContext
 import com.ucb.ucbtest.R
 
 @Composable
@@ -36,6 +39,7 @@ fun BooksUI(viewModel: BookViewModel = hiltViewModel()) {
     var bookName by remember { mutableStateOf("") }
 
     val bookState by viewModel.flow.collectAsState()
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -95,9 +99,6 @@ fun BooksUI(viewModel: BookViewModel = hiltViewModel()) {
                                         )
                                         .clip(RoundedCornerShape(20.dp))
                                         .background(color = Color.Cyan)
-//                                        .clickable {
-//                                            onSuccess(ui.list[it])
-//                                        }
                                 ) {
                                     Box( modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
@@ -132,6 +133,14 @@ fun BooksUI(viewModel: BookViewModel = hiltViewModel()) {
                                             Text(
                                                 text = book.publish_year,
                                             )
+                                            OutlinedButton(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                onClick = {
+                                                    viewModel.savingBook(book)
+                                                }
+                                            ){
+                                                Text("Me gusta")
+                                        }
                                         }
                                     }
                                 }
@@ -141,6 +150,10 @@ fun BooksUI(viewModel: BookViewModel = hiltViewModel()) {
                 }
                 is BookViewModel.BookState.Error -> {
                     Text(state.message)
+                }
+
+                is BookViewModel.BookState.Saved -> {
+                    Toast.makeText(context,"Se añadió a libros favoritos",Toast.LENGTH_LONG).show()
                 }
             }
         }
