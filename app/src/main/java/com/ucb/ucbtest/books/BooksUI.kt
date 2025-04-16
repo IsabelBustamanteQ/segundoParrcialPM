@@ -33,7 +33,8 @@ fun BooksUI(
     var bookName by remember { mutableStateOf("") }
     val bookState by viewModel.flow.collectAsState()
     val context = LocalContext.current
-
+    val loadingMessage=stringResource(id = R.string.loading_favorite_books)
+    val addingMessage=stringResource(R.string.adding_book)
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -45,7 +46,7 @@ fun BooksUI(
             modifier = Modifier.fillMaxSize()
         ) {
             Text(
-                text = "Buscador de Libros",
+                text = stringResource(id = R.string.books_title),
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier
                     .padding(top = 32.dp, bottom = 8.dp),
@@ -56,11 +57,11 @@ fun BooksUI(
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
                 onClick = {
-                    Toast.makeText(context, "Cargando Libros Favoritos", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, loadingMessage, Toast.LENGTH_SHORT).show()
                     navController.navigate(Screen.FavoriteBooksScreen.route)
                 }
             ) {
-                Text("Libros Favoritos")
+                Text(stringResource(id=R.string.favorite_books))
             }
 
             OutlinedTextField(
@@ -69,7 +70,7 @@ fun BooksUI(
                     .padding(vertical = 8.dp),
                 value = bookName,
                 onValueChange = { bookName = it },
-                label = { Text("Ingrese el nombre del libro") },
+                label = { Text(stringResource(id = R.string.book_name_input)) },
                 singleLine = true
             )
 
@@ -84,12 +85,12 @@ fun BooksUI(
 
             when (val state = bookState) {
                 is BookViewModel.BookState.Init -> {
-                    Text("Aún no se buscó nada", modifier = Modifier.padding(top = 24.dp))
+                    Text(stringResource(R.string.no_book_yet), modifier = Modifier.padding(top = 24.dp))
                 }
 
                 is BookViewModel.BookState.Successful -> {
                     Text(
-                        text = "Resultados:",
+                        text = stringResource(R.string.book_results),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(top = 24.dp)
                     )
@@ -113,12 +114,12 @@ fun BooksUI(
                                     horizontalAlignment = Alignment.Start
                                 ) {
                                     Text("📖 ${book.title}", style = MaterialTheme.typography.titleLarge)
-                                    Text("👤 Autor(es): ${book.author.joinToString()}")
-                                    Text("📅 Año de publicación: ${book.publish_year}")
+                                    Text("👤 "+stringResource(R.string.author_label)+ " ${book.author.joinToString()}")
+                                    Text("📅 "+stringResource(R.string.publish_year_label)+" ${book.publish_year}")
 
                                     OutlinedButton(
                                         onClick = { viewModel.savingBook(book)
-                                            Toast.makeText(context,"Añadido a Favoritos",Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(context,addingMessage,Toast.LENGTH_SHORT).show()
                                                   },
                                         modifier = Modifier
                                             .padding(top = 12.dp)
@@ -128,7 +129,7 @@ fun BooksUI(
                                     ) {
                                         Icon(
                                             imageVector = Icons.Filled.Favorite,
-                                            contentDescription = "Me gusta",
+                                            contentDescription = stringResource(R.string.like),
                                             tint = Color.Red
                                         )
                                     }

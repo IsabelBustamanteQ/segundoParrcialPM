@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,9 +33,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.ucb.ucbtest.R
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoriteBooksUI(
@@ -55,11 +57,11 @@ fun FavoriteBooksUI(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Libros Favoritos")
+                    Text(stringResource(R.string.favorite_books))
                 },
                 navigationIcon = {
                     IconButton(onClick = { onBackPressed() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
+                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.goBack))
                     }
                 }
             )
@@ -80,7 +82,7 @@ fun FavoriteBooksUI(
                         ) {
                             CircularProgressIndicator()
                             Text(
-                                "Iniciando Lista de Libros guardados",
+                                stringResource(R.string.init_favorite_books),
                                 modifier = Modifier.padding(top = 16.dp)
                             )
                         }
@@ -89,7 +91,7 @@ fun FavoriteBooksUI(
                     is BookViewModel.BookState.Successful -> {
                         Column(modifier = Modifier.fillMaxSize()) {
                             Text(
-                                text = "Resultados:",
+                                text =stringResource(R.string.book_results),
                                 style = MaterialTheme.typography.titleMedium,
                                 modifier = Modifier.padding(vertical = 16.dp)
                             )
@@ -110,8 +112,8 @@ fun FavoriteBooksUI(
                                             horizontalAlignment = Alignment.Start
                                         ) {
                                             Text("📖 ${book.title}", style = MaterialTheme.typography.titleLarge)
-                                            Text("👤 Autor(es): ${book.author.joinToString()}")
-                                            Text("📅 Año de publicación: ${book.publish_year}")
+                                            Text("👤 "+stringResource(R.string.author_label)+ " ${book.author.joinToString()}")
+                                            Text("📅 "+stringResource(R.string.publish_year_label)+" ${book.publish_year}")
                                         }
                                     }
                                 }

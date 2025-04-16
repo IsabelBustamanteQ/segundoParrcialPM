@@ -8,4 +8,16 @@
     <string name="btn_take_photo">Tomar foto</string>
     <string name="movie_list">Movie List</string>
     <string name="token">fa3e844ce31744388e07fa47c7c5d8c3</string>
+    <string name="books_title">Buscador de Libros</string>
+    <string name="loading_favorite_books">Cargando Libros Favoritos</string>
+    <string name="favorite_books">Libros Favoritos</string>
+    <string name="book_name_input">Ingrese el nombre del libro</string>
+    <string name="no_book_yet">Aún no se buscó nada</string>
+    <string name="book_results">Resultados:</string>
+    <string name="author_label">Autor(es):</string>
+    <string name="publish_year_label">Año de publicación:</string>
+    <string name="adding_book">Añadido a Favoritos</string>
+    <string name="like">Me gusta</string>
+    <string name="goBack">Volver</string>
+    <string name="init_favorite_books">Iniciando Lista de Libros guardados</string>
 </resources>
