@@ -62,3 +62,6 @@ fun Book.toEntity(): BookDB {
     )
 }
 
+fun BookDB.toModel(): Book {
+    return Book(author=author,title=title,publish_year=publish_year)
+}

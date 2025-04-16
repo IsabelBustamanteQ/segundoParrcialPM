@@ -10,6 +10,7 @@ import com.ucb.ucbtest.R
 import com.ucb.ucbtest.Simulacro.FinanzasViewModel.FinanzasState
 import com.ucb.ucbtest.service.InternetConnection
 import com.ucb.usecases.books.FindBooks
+import com.ucb.usecases.books.GetBooks
 import com.ucb.usecases.books.SaveBook
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -24,6 +25,7 @@ import javax.inject.Inject
 class BookViewModel @Inject constructor(
     private val findBooks : FindBooks,
     private val saveBook: SaveBook,
+    private val getBooks: GetBooks,
     @ApplicationContext private val context: Context
 ): ViewModel() {
 
@@ -64,6 +66,16 @@ class BookViewModel @Inject constructor(
             } else {
                 BookState.Error("No se pudo registrar el ingreso")
             }).also { _saveflow.value = it }
+        }
+    }
+    fun getBooks(){
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) { getBooks.invoke() }
+            _flow.value = if (result.isNotEmpty()) {
+                BookState.Successful(result)
+            } else {
+                BookState.Error("No se encontraron registros")
+            }
         }
     }
 }

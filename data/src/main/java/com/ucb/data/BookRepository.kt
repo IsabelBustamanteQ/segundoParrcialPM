@@ -15,4 +15,7 @@ class BookRepository(
         this.localDataSource.save(book)
         return true
     }
+    suspend fun getBooks():List<Book>{
+        return this.localDataSource.getBooks()
+    }
 }

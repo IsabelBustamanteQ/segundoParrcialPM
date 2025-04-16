@@ -4,6 +4,7 @@ import android.content.Context
 import com.ucb.data.books.IBookLocalDataSource
 import com.ucb.domain.books.Book
 import com.ucb.framework.mappers.toEntity
+import com.ucb.framework.mappers.toModel
 import com.ucb.framework.persistenceBook.BookRoomDatabase
 import com.ucb.framework.persistenceBook.IBookDAO
 
@@ -12,5 +13,8 @@ class BookLocalDataSource(val context: Context) : IBookLocalDataSource {
     override suspend fun save(book: Book): Boolean {
         bookDAO.insert(book.toEntity())
         return true
+    }
+    override suspend fun getBooks(): List<Book> {
+        return bookDAO.getMyBooks().map { it.toModel() }
     }
 }

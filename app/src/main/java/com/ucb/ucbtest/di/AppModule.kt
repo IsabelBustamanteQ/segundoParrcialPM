@@ -38,6 +38,7 @@ import com.ucb.framework.simulacro.FinanzasLocalDataSource
 import com.ucb.usecases.GetEmailKey
 import com.ucb.usecases.ObtainToken
 import com.ucb.usecases.books.FindBooks
+import com.ucb.usecases.books.GetBooks
 import com.ucb.usecases.books.SaveBook
 import com.ucb.usecases.simulacro.DeleteFinanza
 import com.ucb.usecases.simulacro.DoEgreso
@@ -198,7 +199,11 @@ fun provideFinanzasLocalDataSource(@ApplicationContext context: Context): IFinan
     fun provideSaveBook(bookRepository: BookRepository, @ApplicationContext context: Context): SaveBook {
         return SaveBook(bookRepository)
     }
-
+    @Provides
+    @Singleton
+    fun provideGetBooks(bookRepository: BookRepository, @ApplicationContext context: Context): GetBooks {
+        return GetBooks(bookRepository)
+    }
     @Provides
     @Singleton
     fun bookRemoteDataSource(retrofiService: RetrofitBuilder): IBookRemoteDataSource {
